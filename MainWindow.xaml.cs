@@ -1,115 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-using Sterilization.Views;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using WPFPersonalTracking.DB;
+using WPFPersonalTracking.ViewModels;
 
-namespace Sterilization
+namespace WPFPersonalTracking
 {
-    
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
-        public readonly DashboardPage    _pageDashboard   = new DashboardPage();
-        public readonly DataViewPage     _pageTagDesc     = new DataViewPage("TagDescriptions",     "Tag Descriptions");
-        public readonly DataViewPage     _pageGoodCycles  = new DataViewPage("GoodCycles",          "2 Days of Good Cycles");
-        public readonly DataViewPage     _pageFailedCycle1= new DataViewPage("FailedCycle1",        "Failed Cycle 1");
-        public readonly DataViewPage     _pageFailedCycle2= new DataViewPage("FailedCycle2",        "Failed Cycle 2");
-
         public MainWindow()
         {
             InitializeComponent();
-            NavigateTo(_pageDashboard, BtnNavDashboard);
+            lblWindowName.Content = "Task List";
+            DataContext = new TaskViewModel();
+
+
         }
 
-        // ── Navigation ──────────────────────────────────────────────
-        private void NavBtn_Click(object sender, RoutedEventArgs e)
+        private void btnDepartment_Click(object sender, RoutedEventArgs e)
         {
-            var btn = (System.Windows.Controls.Button)sender;
-
-            if      (btn == BtnNavDashboard)   NavigateTo(_pageDashboard,    btn);
-            else if (btn == BtnNavTagDesc)      NavigateTo(_pageTagDesc,      btn);
-            else if (btn == BtnNavGoodCycles)   NavigateTo(_pageGoodCycles,   btn);
-            else if (btn == BtnNavFailed1)      NavigateTo(_pageFailedCycle1, btn);
-            else if (btn == BtnNavFailed2)      NavigateTo(_pageFailedCycle2, btn);
+            lblWindowName.Content = "Department List";
+            DataContext = new DepartmentViewModel();
         }
 
-        private bool _menuExpanded = true;
-        private void BtnToggleMenu_Click(object sender, RoutedEventArgs e)
+        private void btnPosition_Click(object sender, RoutedEventArgs e)
         {
-            _menuExpanded = !_menuExpanded;
-
-            SidebarColumn.Width = new GridLength(_menuExpanded ? 220 : 52);
-
-            var visibility = _menuExpanded ? Visibility.Visible : Visibility.Collapsed;
-
-            // Hide/show text labels
-            TxtNavLabel.Visibility = visibility;
-            TxtMenuLabel.Visibility = visibility;
-            LblDashboard.Visibility = visibility;
-            LblTagDesc.Visibility = visibility;
-            LblGoodCycles.Visibility = visibility;
-            LblFailed1.Visibility = visibility;
-            LblFailed2.Visibility = visibility;
-            LblSettings.Visibility = visibility;
+            lblWindowName.Content = "Position List";
+            DataContext = new PositionViewModel();
         }
 
-        public System.Windows.Controls.Button _activeBtn;
-        public void NavigateTo(System.Windows.Controls.Page page,
-                                 System.Windows.Controls.Button btn)
+        private void btnEmployee_Click(object sender, RoutedEventArgs e)
         {
-            if (_activeBtn != null) _activeBtn.Tag = null;
-            btn.Tag = "Active";
-            _activeBtn = btn;
-            MainFrame.Navigate(page);
-        }
-        //private void NavigateTo(System.Windows.Controls.Page page,
-        //                 System.Windows.Controls.Button btn)
-        //{
-        //    if (_activeBtn != null) _activeBtn.Tag = null;
-        //    btn.Tag = "Active";
-        //    _activeBtn = btn;
-        //    MainFrame.Navigate(page);
-
-        //    // Update hamburger label to show current page name
-        //    if (btn == BtnNavDashboard) TxtMenuLabel.Text = "Dashboard";
-        //    else if (btn == BtnNavTagDesc) TxtMenuLabel.Text = "Tag Descriptions";
-        //    else if (btn == BtnNavGoodCycles) TxtMenuLabel.Text = "Good Cycles";
-        //    else if (btn == BtnNavFailed1) TxtMenuLabel.Text = "Failed Cycle 1";
-        //    else if (btn == BtnNavFailed2) TxtMenuLabel.Text = "Failed Cycle 2";
-        //}
-
-        // ── Settings ─────────────────────────────────────────────────
-        private void BtnSettings_Click(object sender, RoutedEventArgs e)
-        {
-            var win = new Windows.SettingsWindow { Owner = this };
-            if (win.ShowDialog() == true)
+            
+            if(!UserStatic.isAdmin)
             {
-                // Refresh all data pages after successful import
-                _pageTagDesc.Refresh();
-                _pageGoodCycles.Refresh();
-                _pageFailedCycle1.Refresh();
-                _pageFailedCycle2.Refresh();
-                _pageDashboard.Refresh();
+                PersonalTrackingContext db = new PersonalTrackingContext();
+                Employee employee = db.Employees.Find(UserStatic.EmployeeId);
+                EmployeeDetailModel model = new EmployeeDetailModel();
+                model.Adress = employee.Adress;
+                model.BirthDay = (DateTime)employee.Birthday;
+                model.DepartmentID = employee.DepartmentId;
+                model.Id = employee.Id;
+                model.ImagePath = employee.ImagePath;
+                model.isAdmin = employee.IsAdmin;
+                model.Name = employee.Name;
+                model.Password = employee.Password;
+                model.PositionId = employee.PositionId;
+                model.Salary = employee.Salary;
+                model.Surname = employee.Surname;
+                model.UserNo = employee.UserNo;
+                EmployeePage page = new EmployeePage();
+                page.model = model;
+                page.ShowDialog();
+            }
+            else
+            {
+                lblWindowName.Content = "Employee List";
+                DataContext = new EmployeeViewModel();
             }
         }
 
-        // ── Window chrome ─────────────────────────────────────────────
-        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void btnTask_Click(object sender, RoutedEventArgs e)
         {
-            if (e.ClickCount == 2) ToggleMaximize();
-            else DragMove();
+            lblWindowName.Content = "Task List";
+            DataContext = new TaskViewModel();
         }
 
-        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
-            => WindowState = WindowState.Minimized;
+        private void btnSalary_Click(object sender, RoutedEventArgs e)
+        {
+            lblWindowName.Content = "Salary List";
+            DataContext = new SalaryViewModel();
+        }
 
-        private void BtnMaximize_Click(object sender, RoutedEventArgs e)
-            => ToggleMaximize();
+        private void btnPermission_Click(object sender, RoutedEventArgs e)
+        {
+            lblWindowName.Content = "Permission List";
+            DataContext = new PermissionViewModel();
+        }
 
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
-            => Close();
+        private void btnLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
-        private void ToggleMaximize()
-            => WindowState = WindowState == WindowState.Maximized
-                ? WindowState.Normal
-                : WindowState.Maximized;
+        private void PersonalMainWindow_Closed(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void PersonalMainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(!UserStatic.isAdmin)
+            {
+                stackDepartment.Visibility = Visibility.Hidden;
+                stackPosition.Visibility = Visibility.Hidden;
+                stacklogoff.SetValue(Grid.RowProperty, 5);
+                stackexit.SetValue(Grid.RowProperty, 6);
+
+            }
+        }
+
+        //private void btnExit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (MessageBox.Show("Are you sure you want to exit?",
+        //        "Exit", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        //    {
+        //        Application.Current.Shutdown();
+        //    }
+        //}
     }
 }

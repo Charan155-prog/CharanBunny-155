@@ -1,324 +1,163 @@
-<Window x:Class="Sterilization.MainWindow"
+﻿<Window x:Class="WPFPersonalTracking.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:Sterilization"
-        Title="Sterilization Monitoring System"
-        Height="820" Width="1300"
-        MinHeight="600" MinWidth="900"
-        WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        Background="Transparent">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFPersonalTracking"
+        xmlns:views="clr-namespace:WPFPersonalTracking.Views"
+        xmlns:viewmodels="clr-namespace:WPFPersonalTracking.ViewModels"
+        mc:Ignorable="d"
+        Title="WPF Personal Tracking" Name="PersonalMainWindow" Height="540" Width="1200" WindowStartupLocation="CenterScreen" FontSize="24" FontWeight="Bold" Background="#FF8EAFF7" Icon="/Logo.png" ResizeMode="NoResize" Closed="PersonalMainWindow_Closed" Loaded="PersonalMainWindow_Loaded"   >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Image Source="/Logo.png" />
+        <ContentControl Content="{Binding}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="8" Height="Auto" FontWeight="Normal" Width="Auto"/>
+        <Label x:Name="lblWindowName" Content="Windows Name" Grid.Column="1" HorizontalAlignment="Center" Margin="212,10,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <StackPanel Grid.Row="1" Margin="0,2,0,0">
+            <Button Grid.Row="1" Name="btnEmployee" Height="60" Width="250" HorizontalAlignment="Left" Click="btnEmployee_Click">
+                <Grid Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="EmployeeImage" HorizontalAlignment="Left" Height="auto" Width="73" Margin="0,0,0,0" Source="/Employee.png"/>
+                    <TextBlock Text="Employee" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
 
+            </Button>
+
+        </StackPanel>
+        <StackPanel Grid.Row="2" Margin="0,2,0,0">
+            <Button Grid.Row="2" Name="btnTask" Height="60" Width="250" HorizontalAlignment="Left" Click="btnTask_Click">
+                <Grid Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="TaskImage" HorizontalAlignment="Left" Height="auto" Width="73" Margin="0,0,0,0" Source="/Task.png"/>
+                    <TextBlock Text="Task" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Margin="0,2,0,0">
+            <Button Grid.Row="3" Name="btnSalary" Height="60" Width="250" HorizontalAlignment="Left" Click="btnSalary_Click">
+                <Grid Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="SalaryImage" HorizontalAlignment="Left" Height="auto" Width="73" Margin="0,0,0,0" Source="/Salary.png"/>
+                    <TextBlock Text="Salary" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Margin="0,2,0,0">
+            <Button Grid.Row="4" Name="btnPermission" Height="60" Width="250" HorizontalAlignment="Left" Click="btnPermission_Click">
+                <Grid Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="PermissionImage" HorizontalAlignment="Left" Height="auto" Width="73" Margin="0,0,0,0" Source="/Permission.png"/>
+                    <TextBlock Text="Permission" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="stackDepartment" Grid.Row="5" Margin="0,2,0,0">
+            <Button Grid.Row="5" Name="btnDepartment" Height="60" Width="250" HorizontalAlignment="Left" Click="btnDepartment_Click">
+                <Grid Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="DpImage" HorizontalAlignment="Left" Height="auto" Width="73" Margin="0,0,0,0" Source="/Department.png"/>
+                    <TextBlock Text="Department" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="stackPosition" Grid.Row="6" Margin="0,2,0,0">
+            <Button Grid.Row="6" Name="btnPosition" Height="60" Width="250" HorizontalAlignment="Left" Click="btnPosition_Click">
+                <Grid Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="PositionImage" HorizontalAlignment="Left" Height="auto" Width="73" Margin="0,0,0,0" Source="/Position.png"/>
+                    <TextBlock Text="Position" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+        </StackPanel >
+        <StackPanel x:Name="stacklogoff" Grid.Row="7" Margin="0,2,0,0">
+            <Button Grid.Row="7" Name="btnLogOut" Height="60" Width="250" HorizontalAlignment="Left" Click="btnLogOut_Click">
+                <Grid Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="LogoutImage" HorizontalAlignment="Left" Height="auto" Width="73" Margin="0,0,0,0" Source="/Logout.png"/>
+                    <TextBlock Text="Log Out" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="stackexit" Grid.Row="8" Margin="0,2,0,0">
+            <Button Grid.Row="8" Name="btnExit" Height="60" Width="250" HorizontalAlignment="Left">
+                <Grid Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="ExitImage" HorizontalAlignment="Left" Height="auto" Width="73" Margin="0,0,0,0" Source="/Exit.png"/>
+                    <TextBlock Text="Exit" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                 
+                </Grid>
+            </Button>
+        </StackPanel>
+    </Grid>
     <Window.Resources>
-        <!-- Drop shadow -->
-        <DropShadowEffect x:Key="WindowShadow"
-                          BlurRadius="30" ShadowDepth="0"
-                          Color="#FF000000" Opacity="0.6"/>
+        <DataTemplate x:Name="DepartmentTemplate" DataType="{x:Type viewmodels:DepartmentViewModel}">
+            <views:DepartmentList>
+
+            </views:DepartmentList>
+        </DataTemplate>
+        <DataTemplate x:Name="PositionTemplate" DataType="{x:Type viewmodels:PositionViewModel}">
+            <views:PositionList>
+                
+            </views:PositionList>            
+        </DataTemplate>
+        <DataTemplate x:Name="Employeetemplate" DataType="{x:Type viewmodels:EmployeeViewModel}">
+            <views:EmployeeListView>
+                
+            </views:EmployeeListView>
+        </DataTemplate>
+        <DataTemplate x:Name="TaskTemplate" DataType="{x:Type viewmodels:TaskViewModel}">
+            <views:TaskList>
+                
+            </views:TaskList>
+        </DataTemplate>
+        <DataTemplate x:Name="salarytemplate" DataType="{x:Type viewmodels:SalaryViewModel}">
+            <views:SalaryList>
+                
+            </views:SalaryList>
+        </DataTemplate>
+        <DataTemplate x:Name="Permissiontemplate" DataType="{x:Type viewmodels:PermissionViewModel}">
+            <views:PermissionList>
+                
+            </views:PermissionList>
+        </DataTemplate>
     </Window.Resources>
 
-    <Border CornerRadius="10"
-            Background="{StaticResource BrBgDeep}"
-            BorderBrush="{StaticResource BrBorderSubtle}"
-            BorderThickness="1"
-            Effect="{StaticResource WindowShadow}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>   <!-- Title bar -->
-                <RowDefinition Height="*"/>    <!-- Content -->
-            </Grid.RowDefinitions>
-
-            <!-- ═══ TITLE BAR ═══ -->
-            <Border Grid.Row="0"
-                    Background="{StaticResource BrBgPanel}"
-                    CornerRadius="10,10,0,0"
-                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Logo + Title -->
-                    <StackPanel Grid.Column="0" Orientation="Horizontal"
-                                VerticalAlignment="Center" Margin="16,0">
-                        <!-- SVG-like geometric logo -->
-                        <Border Width="28" Height="28" CornerRadius="6"
-                                Background="{StaticResource BrAccentBlue}" Margin="0,0,10,0">
-                            <TextBlock Text="⬡" Foreground="White" FontSize="14"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <TextBlock Text="Sterilization" Foreground="{StaticResource BrTextPrimary}"
-                                   FontSize="14" FontWeight="SemiBold" FontFamily="Segoe UI"
-                                   VerticalAlignment="Center"/>
-                        <TextBlock Text="  Monitor" Foreground="{StaticResource BrTextSecondary}"
-                                   FontSize="14" FontFamily="Segoe UI" VerticalAlignment="Center"/>
-                    </StackPanel>
-
-                    <!-- Status badge -->
-                    <StackPanel Grid.Column="1" Orientation="Horizontal"
-                                HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Ellipse Width="7" Height="7" Fill="{StaticResource BrAccentTeal}" Margin="0,0,6,0"/>
-                        <TextBlock x:Name="TxtStatus" Text="System Online"
-                                   Foreground="{StaticResource BrTextSecondary}"
-                                   FontSize="12" FontFamily="Segoe UI" VerticalAlignment="Center"/>
-                    </StackPanel>
-
-                    <!-- Window controls -->
-                    <StackPanel Grid.Column="2" Orientation="Horizontal"
-                                VerticalAlignment="Center" Margin="0,0,8,0">
-                        <Button Style="{StaticResource IconButtonStyle}"
-                                Width="32" Height="32" ToolTip="Minimize"
-                                Click="BtnMinimize_Click">
-                            <TextBlock Text="─" FontSize="11" Foreground="{StaticResource BrTextSecondary}"/>
-                        </Button>
-                        <Button Style="{StaticResource IconButtonStyle}"
-                                Width="32" Height="32" ToolTip="Maximize"
-                                Click="BtnMaximize_Click">
-                            <TextBlock Text="⬜" FontSize="10" Foreground="{StaticResource BrTextSecondary}"/>
-                        </Button>
-                        <Button x:Name="BtnClose"
-                                Style="{StaticResource IconButtonStyle}"
-                                Width="32" Height="32" ToolTip="Close"
-                                Click="BtnClose_Click">
-                            <TextBlock Text="✕" FontSize="11" Foreground="{StaticResource BrTextSecondary}"/>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-             <!--═══ MAIN CONTENT AREA ═══--> 
-            <!--<Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="220"/>    --><!--Sidebar--><!-- 
-                    <ColumnDefinition Width="*"/>      --><!--Content--><!-- 
-                </Grid.ColumnDefinitions>
-
-                 --><!--═══ SIDEBAR ═══--><!-- 
-                <Border Grid.Column="0"
-                        Background="{StaticResource BrBgSidebar}"
-                        BorderBrush="{StaticResource BrBorderSubtle}"
-                        BorderThickness="0,0,1,0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                         --><!--Nav items--><!-- 
-                        <StackPanel Grid.Row="0" Margin="0,12,0,0">
-
-                            <TextBlock Text="NAVIGATION"
-                                       Foreground="{StaticResource BrTextMuted}"
-                                       FontSize="10" FontFamily="Segoe UI"
-                                       FontWeight="SemiBold"
-                                       Margin="20,8,0,8"/>
-
-                            <Button x:Name="BtnNavDashboard"
-                                    Style="{StaticResource NavButtonStyle}"
-                                    Tag="Active"
-                                    Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⬡" FontSize="14" Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Text="Dashboard" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="BtnNavTagDesc"
-                                    Style="{StaticResource NavButtonStyle}"
-                                    Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🏷" FontSize="13" Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Text="Tag Descriptions" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="BtnNavGoodCycles"
-                                    Style="{StaticResource NavButtonStyle}"
-                                    Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="✅" FontSize="13" Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Text="Good Cycles" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="BtnNavFailed1"
-                                    Style="{StaticResource NavButtonStyle}"
-                                    Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⚠" FontSize="13" Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Text="Failed Cycle 1" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="BtnNavFailed2"
-                                    Style="{StaticResource NavButtonStyle}"
-                                    Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⚠" FontSize="13" Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Text="Failed Cycle 2" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                        </StackPanel>
-
-                         --><!--Bottom: Settings--><!-- 
-                        <StackPanel Grid.Row="1" Margin="0,0,0,16">
-                            <Border Height="1" Background="{StaticResource BrBorderSubtle}"
-                                    Margin="16,0,16,8"/>
-                            <Button x:Name="BtnSettings"
-                                    Style="{StaticResource NavButtonStyle}"
-                                    Click="BtnSettings_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⚙" FontSize="15" Margin="0,0,10,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Text="Settings" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                 --><!--═══ PAGE CONTENT FRAME ═══--><!-- 
-                <Border Grid.Column="1" Background="{StaticResource BrBgDeep}">
-                    <Frame x:Name="MainFrame"
-                           NavigationUIVisibility="Hidden"
-                           Background="Transparent"/>
-                </Border>
-            </Grid>-->
-            <!-- ═══ MAIN CONTENT AREA ═══ -->
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="SidebarColumn" Width="220"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                 <!--═══ SIDEBAR ═══--> 
-                <Border Grid.Column="0"
-            Background="{StaticResource BrBgSidebar}"
-            BorderBrush="{StaticResource BrBorderSubtle}"
-            BorderThickness="0,0,1,0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                         <!--Hamburger toggle button--> 
-                        <Button Grid.Row="0"
-                    x:Name="BtnToggleMenu"
-                    Style="{StaticResource NavButtonStyle}"
-                    HorizontalAlignment="Left"
-                    Margin="0,8,0,0"
-                    Click="BtnToggleMenu_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="☰" FontSize="16" Margin="0,0,10,0"
-                               VerticalAlignment="Center"/>
-                                <TextBlock x:Name="TxtMenuLabel" Text="Dashboard"
-                               VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-
-                         <!--Nav items--> 
-                        <StackPanel Grid.Row="1" Margin="0,4,0,0">
-
-                            <TextBlock x:Name="TxtNavLabel"
-                           Text="NAVIGATION"
-                           Foreground="{StaticResource BrTextMuted}"
-                           FontSize="10" FontFamily="Segoe UI"
-                           FontWeight="SemiBold"
-                           Margin="20,8,0,8"/>
-
-                            <Button x:Name="BtnNavDashboard"
-                        Style="{StaticResource NavButtonStyle}"
-                        Tag="Active"
-                        Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⬡" FontSize="14" Margin="0,0,10,0"
-                                   VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="LblDashboard" Text="Dashboard"
-                                   VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="BtnNavTagDesc"
-                        Style="{StaticResource NavButtonStyle}"
-                        Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🏷" FontSize="13" Margin="0,0,10,0"
-                                   VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="LblTagDesc" Text="Tag Descriptions"
-                                   VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="BtnNavGoodCycles"
-                        Style="{StaticResource NavButtonStyle}"
-                        Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="✅" FontSize="13" Margin="0,0,10,0"
-                                   VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="LblGoodCycles" Text="Good Cycles"
-                                   VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="BtnNavFailed1"
-                        Style="{StaticResource NavButtonStyle}"
-                        Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⚠" FontSize="13" Margin="0,0,10,0"
-                                   VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="LblFailed1" Text="Failed Cycle 1"
-                                   VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button x:Name="BtnNavFailed2"
-                        Style="{StaticResource NavButtonStyle}"
-                        Click="NavBtn_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⚠" FontSize="13" Margin="0,0,10,0"
-                                   VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="LblFailed2" Text="Failed Cycle 2"
-                                   VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                        </StackPanel>
-
-                         <!--Bottom: Settings--> 
-                        <StackPanel Grid.Row="2" Margin="0,0,0,16">
-                            <Border Height="1" Background="{StaticResource BrBorderSubtle}"
-                        Margin="16,0,16,8"/>
-                            <Button x:Name="BtnSettings"
-                        Style="{StaticResource NavButtonStyle}"
-                        Click="BtnSettings_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⚙" FontSize="15" Margin="0,0,10,0"
-                                   VerticalAlignment="Center"/>
-                                    <TextBlock x:Name="LblSettings" Text="Settings"
-                                   VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                 <!--═══ PAGE CONTENT FRAME ═══--> 
-                <Border Grid.Column="1" Background="{StaticResource BrBgDeep}">
-                    <Frame x:Name="MainFrame"
-               NavigationUIVisibility="Hidden"
-               Background="Transparent"/>
-                </Border>
-            </Grid>
-        </Grid>
-    </Border>
 </Window>
